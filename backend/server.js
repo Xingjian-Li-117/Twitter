@@ -7,6 +7,8 @@ const userRoutes = require('./apis/user');
 const tweetRoutes = require('./apis/tweet');
 const cors = require('cors');
 
+const path = require('path');
+
 const app = express();
 
 
@@ -19,27 +21,21 @@ app.use('/api/tweets/', tweetRoutes);
 
 
 
+
 const mongoDBEndpoint = process.env.MONGODB_URI || 'mongodb://127.0.0.1/collection_name';
 mongoose.connect(mongoDBEndpoint);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
-
-const path = require('path'); let frontend_dir = path.join(__dirname, '..', 'frontend', 'build')
+// new
+let frontend_dir = path.join(__dirname, '..', 'frontend', 'build')
 
 app.use(express.static(frontend_dir));
-
 app.get('*', function (req, res) {
     console.log("received request");
     res.sendFile(path.join(frontend_dir, "index.html"));
 });
-
-/*
-app.use((req, res, next) => {
-    res.status(404).send('404 Not Found');
-});
-*/
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, function() {
