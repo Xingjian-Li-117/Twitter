@@ -7,7 +7,8 @@ import { useUser } from "../context/UserContext";
 const LeftSideBar = () => {
   const { currentUser, logout } = useUser();
   return (
-    <div className="sticky top-[60px] h-screen flex flex-col h-full md:h-[90vh] justify-between mr-6">
+    <div className="sticky top-[60px] sm:h-screen md:h-[88vh] flex flex-col justify-between mr-6 sm:mt-2 sm:mb-2 md:mt-6 md:mb-6">
+      
         <div className="mt-6 flex flex-col space-y-4">
             <Link to="/">
                 <div className="flex items-center space-x-6 px-2 py-2 hover:bg-slate-200 rounded-full cursor-pointer">

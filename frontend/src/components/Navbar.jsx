@@ -11,7 +11,8 @@ const Navbar = () => {
   const location = useLocation().pathname;
   return (
     <div className="fixed top-0 md:w-9/12 z-10 grid grid-cols-1 md:grid-cols-4 py-5 justify-center bg-white">
-      <div className="mx-auto md:mx-0">
+      
+      <div className="mx-auto md:mx-0 hidden sm:block ">
         <img
           src="/logo.jpg"
           alt="Twitter Logo"
@@ -33,7 +34,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="px-0 md:px-6 mx-auto">
+      <div className="px-0 md:px-6 mx-auto hidden sm:block">
         <SearchIcon className="absolute m-2" />
         <input type="text" className="bg-slate-200 rounded-full py-2 px-8" />
       </div>
