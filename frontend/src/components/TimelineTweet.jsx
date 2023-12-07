@@ -4,37 +4,38 @@ import Tweet from "./Tweet";
 import { useUser } from "../context/UserContext";
 
 const TimelineTweet = () => {
-    const [timeline, setTimeline] = useState(null);
+    const [timeline, setTimeline] = useState([]); 
     const { currentUser } = useUser();
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //if (currentUser) {
-                    const timelineTweets = await axios.get(`/tweets/timeline/all`);
-                    setTimeline(timelineTweets.data);
-                //}
+                const response = await axios.get(`/tweets/timeline/all`);
+                if (Array.isArray(response.data)) { 
+                    setTimeline(response.data);
+                } else {
+
+                    setTimeline([]); 
+                }
             } catch (error) {
                 console.error("Error fetching timeline tweets", error);
+                setTimeline([]); 
             }
         };
 
         fetchData();
     }, [currentUser]);
 
-
     return (
         <div className="mt-6">
-            {timeline && timeline.map((tweet) => {
-                return (
-                    <div key={tweet._id} className="p-2">
-                        <Tweet tweet={tweet} setData={setTimeline} />
-                    </div>
-                );
-            })}
+            {timeline.map((tweet) => (
+                <div key={tweet._id} className="p-2">
+                    <Tweet tweet={tweet} setData={setTimeline} />
+                </div>
+            ))}
         </div>
     );
 }
 
 export default TimelineTweet;
+

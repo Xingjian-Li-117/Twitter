@@ -16,9 +16,6 @@ app.use(cors());
 app.use('/api/users/', userRoutes);
 app.use('/api/tweets/', tweetRoutes);
 
-app.use((req, res, next) => {
-    res.status(404).send('404 Not Found');
-});
 
 
 
@@ -27,6 +24,22 @@ mongoose.connect(mongoDBEndpoint);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
+
+
+const path = require('path'); let frontend_dir = path.join(__dirname, '..', 'frontend', 'build')
+
+app.use(express.static(frontend_dir));
+
+app.get('*', function (req, res) {
+    console.log("received request");
+    res.sendFile(path.join(frontend_dir, "index.html"));
+});
+
+/*
+app.use((req, res, next) => {
+    res.status(404).send('404 Not Found');
+});
+*/
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, function() {
